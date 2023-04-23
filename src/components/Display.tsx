@@ -26,7 +26,7 @@ const Display = ({
           className="display-output"
           onClick={() => setCurrentStep(currentStep + 1)}
         >
-          <img src={`http://deckofcardsapi.com/static/img/${prediction}.png`} />
+          <img src={`/cards/${prediction}.png`} />
         </div>
       )}
 
@@ -38,7 +38,8 @@ const Display = ({
             .map((x: any) => (
               <img
                 key={x}
-                src={`http://deckofcardsapi.com/static/img/${x}.png`}
+                // src={`http://deckofcardsapi.com/static/img/${x}.png`}
+                src={`/cards/${x}.png`}
               />
             ))}
         </div>
