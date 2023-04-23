@@ -1,12 +1,11 @@
 import { useState } from "react"
-import "./App.css"
-import Clubs from "./components/Clubs"
-import Diamonds from "./components/Diamonds"
-import Hearts from "./components/Hearts"
-import Spades from "./components/Spades"
+import "./App.scss"
+import Display from "./components/Display"
+import Keyboard from "./components/Keyboard"
 import { oracle } from "./utils/oracle"
 
 function App() {
+  const [currentStep, setCurrentStep] = useState<number>(0)
   const [input, setInput] = useState<string[]>([])
   const [limit, setLimit] = useState<number>(4)
   const [currentNumber, setCurrentNumber] = useState<any>("")
@@ -55,6 +54,7 @@ function App() {
     setCurrentNumber("")
     setPrediction("")
     setLimit(4)
+    setCurrentStep(0)
   }
 
   const predict = () => {
@@ -64,91 +64,33 @@ function App() {
     setCurrentNumber("")
     setInput([])
     setLimit(limit - 1)
+    setCurrentStep(currentStep + 1)
+  }
+
+  {
+    /*************************************************************
+     * TO DO : Change window with each step                      *
+     **************************************************************/
   }
 
   return (
     <div className="App">
-      <div className="display ">
-        <div className="display-output">Output: {prediction}</div>
-        <div className="display-input" onClick={() => erase()}>
-          Input: {input.join()}
-        </div>
-      </div>
-      {/*************************************************************        * TO DO : Change window with each step                        *
-       **************************************************************/}
+      <Display
+        input={input}
+        prediction={prediction}
+        erase={erase}
+        currentStep={currentStep}
+        setCurrentStep={setCurrentStep}
+      />
 
-      <div className="keyboard">
-        <div className="keyboard-wrap-suit">
-          <div className="suitBtn" onClick={() => handleInputColor("S")}>
-            <Spades />
-          </div>
-          <div className="suitBtn" onClick={() => handleInputColor("H")}>
-            <Hearts />
-          </div>
-          <div className="suitBtn" onClick={() => handleInputColor("C")}>
-            <Clubs />
-          </div>
-          <div className="suitBtn" onClick={() => handleInputColor("D")}>
-            <Diamonds />
-          </div>
-          <div className="suitBtn flex-aic-jcc next" onClick={() => clear()}>
-            ...
-          </div>
-        </div>
-        <div className="keyboard-wrap-card">
-          <button
-            className="cardBtn flex-aic-jcc"
-            onClick={() => handleInputNumber("A")}
-          >
-            A
-          </button>
-          {[, , ...Array(9).keys()].map((x, i) => (
-            <button
-              className="cardBtn flex-aic-jcc"
-              key={x}
-              onClick={() => handleInputNumber(i.toString())}
-            >
-              {i}
-            </button>
-          ))}
-          <button
-            className="cardBtn flex-aic-jcc"
-            onClick={() => handleInputNumber("J")}
-          >
-            J
-          </button>
-          <button
-            className="cardBtn flex-aic-jcc"
-            onClick={() => handleInputNumber("Q")}
-          >
-            Q
-          </button>
-          <button
-            className="cardBtn flex-aic-jcc"
-            onClick={() => handleInputNumber("K")}
-          >
-            K
-          </button>
-          {limit > 2 && (
-            <button
-              disabled={input.length != limit}
-              className="cardBtn flex-aic-jcc long"
-              onClick={() => predict()}
-            >
-              Predict
-            </button>
-          )}
-          {limit == 2 && (
-            <button
-              // disabled={input.length != limit}
-              className="cardBtn flex-aic-jcc long"
-              onClick={() => predict()}
-            >
-              ... Final
-            </button>
-          )}
-        </div>
-      </div>
+      <Keyboard
+        input={input}
+        limit={limit}
+        predict={predict}
+        handleInputColor={handleInputColor}
+        handleInputNumber={handleInputNumber}
+        clear={clear}
+      />
     </div>
   )
 }
