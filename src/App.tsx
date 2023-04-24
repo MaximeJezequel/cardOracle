@@ -11,6 +11,7 @@ function App() {
   const [currentNumber, setCurrentNumber] = useState<any>("")
   const [currentColor, setCurrentColor] = useState<any>("")
   const [prediction, setPrediction] = useState<any>("")
+  const [stack, setStack] = useState(["QS", "10D", "6C", "AH", "9D"])
 
   const handleInputNumber = (x: any) => {
     if (currentColor) {
@@ -87,6 +88,7 @@ function App() {
         input={input}
         limit={limit}
         predict={predict}
+        currentStep={currentStep}
         handleInputColor={handleInputColor}
         handleInputNumber={handleInputNumber}
         clear={clear}

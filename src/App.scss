@@ -1,3 +1,10 @@
+$corners: 25px;
+$background-color: #242424;
+$color: white;
+$primary: orange;
+$shadow-light: darkgrey;
+$shadow-dark: grey;
+
 #root {
   margin: 0 auto;
 }
@@ -16,12 +23,10 @@
 }
 
 .display {
-  background-color: black;
-  color: whitesmoke;
   display: flex;
   flex-direction: column;
   height: 30vh;
-  border-radius: 25px 0 25px 25px;
+  border-radius: $corners 0 $corners $corners;
   overflow: hidden;
   position: relative;
 }
@@ -32,8 +37,8 @@
   width: 25px;
   height: 25px;
   text-align: center;
-  background-color: lightgray;
-  border-radius: 0px 0px 0px 25px;
+  background-color: darkgrey;
+  border-radius: 0px 0px 0px $corners;
   position: absolute;
   color: red;
 }
@@ -69,7 +74,7 @@
 .keyboard {
   display: grid;
   grid-template-columns: 25% 75%;
-  background-color: #242424;
+  background-color: $background-color;
 }
 
 .keyboard-wrap-suit {
@@ -87,13 +92,13 @@
 
 .suitBtn,
 .cardBtn {
-  background-color: lightgrey;
+  background-color: $shadow-light;
   margin: 0.25rem;
   width: min(20vw, 100px);
   height: min(20vw, 100px);
-  border-radius: 25px;
-  font-size: x-large;
-  color: white;
+  border-radius: $corners;
+  font-size: xx-large;
+  color: $color;
 }
 .suitBtn svg {
   height: 100%;
@@ -102,15 +107,15 @@
 }
 
 .cardBtn {
-  background-color: darkgrey;
+  background-color: $shadow-dark;
 }
 
 .next {
-  background-color: orange;
+  background-color: $primary;
 }
 
 .long {
-  background-color: orange;
+  background-color: $primary;
   grid-column: span 2;
   width: min(calc(40vw + 0.5rem), calc(200px + 0.5rem));
 }

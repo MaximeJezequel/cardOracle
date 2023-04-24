@@ -7,6 +7,7 @@ const Keyboard = ({
   input,
   limit,
   predict,
+  currentStep,
   handleInputColor,
   handleInputNumber,
   clear,
@@ -14,6 +15,7 @@ const Keyboard = ({
   input: any
   limit: any
   predict: any
+  currentStep: any
   handleInputColor: any
   handleInputNumber: any
   clear: any
