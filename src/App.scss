@@ -1,12 +1,19 @@
-$corners: 25px;
+$border-radius-display: 15px;
+$border-radius-button: 25px;
+$border-radius-long: 25px;
+// $border-radius-display: 15px;
+// $border-radius-button: 50%;
+// $border-radius-long: 50px;
 $background-color: #242424;
-$color: white;
-$primary: orange;
-$shadow-light: darkgrey;
-$shadow-dark: grey;
+$text-color: white;
+$primary-color: orange;
+$primary-button: #626262;
+$primary-button--light: #828282;
+$secondary-button: #a2a2a2;
+$secondary-button--light: #d2d2d2;
 
 #root {
-  margin: 0 auto;
+  margin: 0;
 }
 
 .App {
@@ -25,34 +32,36 @@ $shadow-dark: grey;
 .display {
   display: flex;
   flex-direction: column;
-  height: 30vh;
-  border-radius: $corners 0 $corners $corners;
+  height: 60vw;
+  width: 100%;
+  border-radius: $border-radius-display 0 $border-radius-display
+    $border-radius-display;
   overflow: hidden;
   position: relative;
 }
 
-.reset {
+.display-reset {
   top: 0;
   right: 0;
   width: 25px;
   height: 25px;
   text-align: center;
   background-color: darkgrey;
-  border-radius: 0px 0px 0px $corners;
+  border-radius: 0px 0px 0px $border-radius-display;
   position: absolute;
   color: red;
 }
 
 .display-input,
 .display-output {
-  height: 30vh;
   background-color: darkgreen;
-  padding: 0.5rem;
+  text-align: justify;
+  height: 100%;
 
   & img {
-    max-height: 20vh;
+    max-height: 50vw;
     width: auto;
-    margin-top: 5vh;
+    margin-top: 2.5vh;
     position: relative;
     z-index: 1;
   }
@@ -62,11 +71,27 @@ $shadow-dark: grey;
   direction: ltr;
   text-align: left;
 
-  & img {
-    left: 55px;
-    margin-left: -55px;
+  & img:nth-child(1) {
+    left: 3vw;
+    margin-left: 0;
+  }
+
+  & img:nth-child(2) {
+    left: 7vw;
+    margin-left: -24vw;
+  }
+
+  & img:nth-child(3) {
+    left: 11vw;
+    margin-left: -24vw;
+  }
+
+  & img:nth-child(4) {
+    left: 15vw;
+    margin-left: -24vw;
   }
 }
+
 .display-output {
   text-align: center;
 }
@@ -75,13 +100,14 @@ $shadow-dark: grey;
   display: grid;
   grid-template-columns: 25% 75%;
   background-color: $background-color;
+  text-align: center;
+  column-gap: 0.125rem;
 }
 
 .keyboard-wrap-suit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: stretch;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(5, 1fr);
 }
 
 .keyboard-wrap-card {
@@ -90,51 +116,97 @@ $shadow-dark: grey;
   grid-template-rows: repeat(5, 1fr);
 }
 
+.keyboardtop {
+  display: grid;
+  grid-template-rows: 20% 80%;
+  background-color: $background-color;
+  text-align: center;
+  row-gap: 0.125rem;
+}
+
+.keyboardtop-wrap-suit {
+  display: grid;
+  grid-template-rows: repeat(1, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.keyboardtop-wrap-card {
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+}
+
 .suitBtn,
 .cardBtn {
-  background-color: $shadow-light;
   margin: 0.25rem;
   width: min(20vw, 100px);
   height: min(20vw, 100px);
-  border-radius: $corners;
   font-size: xx-large;
-  color: $color;
+  color: $text-color;
+  border-radius: $border-radius-button;
   border: 1px solid transparent;
   transition: border-color 0.25s;
+  transition: background-color 0.25s;
+}
 
+.suitBtn {
+  background-color: $secondary-button;
   & svg {
     height: 100%;
     width: calc(100% - 4px);
     padding: 0 2px;
   }
-}
 
-.suitBtn:focus,
-.suitBtn:focus-visible {
-  border: 1px solid orange;
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-.cardBtn:focus,
-.cardBtn:focus-visible {
-  border: 1px solid orange;
-  outline: 4px auto -webkit-focus-ring-color;
+  &:hover,
+  :focus,
+  :focus-visible {
+    // border: 1px solid orange;
+    // outline: 2px auto $primary-color;
+    background-color: $secondary-button--light;
+  }
 }
 
 .cardBtn {
-  background-color: $shadow-dark;
+  background-color: $primary-button;
+
+  &:hover,
+  :focus,
+  :focus-visible {
+    // border: 1px solid orange;
+    // outline: 2px auto $primary-color;
+    background-color: $primary-button--light;
+  }
 }
 
 .next {
-  background-color: $primary;
+  background-color: $primary-color;
+
+  &:hover,
+  :focus,
+  :focus-visible {
+    // border: 1px solid orange;
+    // outline: 2px auto $primary-color;
+    background-color: $primary-color;
+  }
 }
 
 .long {
-  background-color: $primary;
+  background-color: $primary-color;
   grid-column: span 2;
+  border-radius: $border-radius-long;
   width: min(calc(40vw + 0.5rem), calc(200px + 0.5rem));
+
+  &:hover,
+  :focus,
+  :focus-visible {
+    // border: 1px solid orange;
+    // outline: 2px auto $primary-color;
+    background-color: $primary-color;
+  }
 }
 
-// @media (min-width: 600px) and (orientation: portrait) {
-
-// }
+@media (orientation: landscape) {
+  .App {
+    height: 200vh;
+  }
+}

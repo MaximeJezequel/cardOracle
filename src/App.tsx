@@ -1,7 +1,8 @@
 import { useState } from "react"
 import "./App.scss"
 import Display from "./components/Display"
-import Keyboard from "./components/Keyboard"
+// import KeyboardLeft from "./components/KeyboardLeft"
+import KeyboardTop from "./components/KeyboardTop"
 import { oracle } from "./utils/oracle"
 
 function App() {
@@ -84,7 +85,7 @@ function App() {
         setCurrentStep={setCurrentStep}
       />
 
-      <Keyboard
+      <KeyboardTop
         input={input}
         limit={limit}
         predict={predict}

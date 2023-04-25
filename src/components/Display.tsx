@@ -13,13 +13,7 @@ const Display = ({
 }) => {
   return (
     <div className="display">
-      <div className="reset" onClick={() => setCurrentStep(0)}>
-        {currentStep}
-      </div>
-      {/* <div className="display-output">Output: {prediction}</div>
-      <div className="display-input" onClick={() => erase()}>
-        Input: {input.join()}
-      </div> */}
+      <div className="display-reset">{currentStep}</div>
 
       {currentStep % 2 == 1 && (
         <div
