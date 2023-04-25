@@ -99,11 +99,26 @@ $shadow-dark: grey;
   border-radius: $corners;
   font-size: xx-large;
   color: $color;
+  border: 1px solid transparent;
+  transition: border-color 0.25s;
+
+  & svg {
+    height: 100%;
+    width: calc(100% - 4px);
+    padding: 0 2px;
+  }
 }
-.suitBtn svg {
-  height: 100%;
-  width: calc(100% - 4px);
-  padding: 0 2px;
+
+.suitBtn:focus,
+.suitBtn:focus-visible {
+  border: 1px solid orange;
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.cardBtn:focus,
+.cardBtn:focus-visible {
+  border: 1px solid orange;
+  outline: 4px auto -webkit-focus-ring-color;
 }
 
 .cardBtn {

@@ -23,19 +23,39 @@ const Keyboard = ({
   return (
     <div className="keyboard">
       <div className="keyboard-wrap-suit">
-        <div className="suitBtn" onClick={() => handleInputColor("S")}>
+        <div
+          className="suitBtn"
+          onClick={() => handleInputColor("S")}
+          tabIndex={0}
+        >
           <Spades />
         </div>
-        <div className="suitBtn" onClick={() => handleInputColor("H")}>
+        <div
+          className="suitBtn"
+          onClick={() => handleInputColor("H")}
+          tabIndex={0}
+        >
           <Hearts />
         </div>
-        <div className="suitBtn" onClick={() => handleInputColor("C")}>
+        <div
+          className="suitBtn"
+          onClick={() => handleInputColor("C")}
+          tabIndex={0}
+        >
           <Clubs />
         </div>
-        <div className="suitBtn" onClick={() => handleInputColor("D")}>
+        <div
+          className="suitBtn"
+          onClick={() => handleInputColor("D")}
+          tabIndex={0}
+        >
           <Diamonds />
         </div>
-        <div className="suitBtn flex-aic-jcc next" onClick={() => clear()}>
+        <div
+          className="suitBtn flex-aic-jcc next"
+          onClick={() => clear()}
+          tabIndex={0}
+        >
           ...
         </div>
       </div>
