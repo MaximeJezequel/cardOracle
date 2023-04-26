@@ -1,6 +1,7 @@
 import { useState } from "react"
 import "./App.scss"
 import Display from "./components/Display"
+import DisplayOne from "./components/DisplayOne"
 // import KeyboardLeft from "./components/KeyboardLeft"
 import KeyboardTop from "./components/KeyboardTop"
 import { oracle } from "./utils/oracle"
@@ -72,18 +73,26 @@ function App() {
   {
     /*************************************************************
      * TO DO : Change window with each step                      *
+     *
+     * When currentStep = 0 --> oracle(input)
+     * When currentStep = 2 --> getStack(input) // input should be previous or in the stack
+     * When currentStep = 3 --> getFinal(input) // input should not be previous or final
      **************************************************************/
   }
 
   return (
     <div className="App">
-      <Display
-        input={input}
-        prediction={prediction}
-        erase={erase}
-        currentStep={currentStep}
-        setCurrentStep={setCurrentStep}
-      />
+      {currentStep % 2 == 0 && (
+        <Display input={input} erase={erase} currentStep={currentStep} />
+      )}
+
+      {currentStep % 2 == 1 && (
+        <DisplayOne
+          prediction={prediction}
+          currentStep={currentStep}
+          setCurrentStep={setCurrentStep}
+        />
+      )}
 
       <KeyboardTop
         input={input}

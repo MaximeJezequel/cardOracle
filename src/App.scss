@@ -40,6 +40,17 @@ $secondary-button--light: #d2d2d2;
   position: relative;
 }
 
+.displayone {
+  display: flex;
+  flex-direction: column;
+  height: 100vw;
+  width: 100%;
+  border-radius: $border-radius-display 0 $border-radius-display
+    $border-radius-display;
+  overflow: hidden;
+  position: relative;
+}
+
 .display-reset {
   top: 0;
   right: 0;
@@ -52,11 +63,10 @@ $secondary-button--light: #d2d2d2;
   color: red;
 }
 
-.display-input,
-.display-output {
+.display-input {
   background-color: darkgreen;
   text-align: justify;
-  height: 100%;
+  height: 60vw;
 
   & img {
     max-height: 50vw;
@@ -93,7 +103,18 @@ $secondary-button--light: #d2d2d2;
 }
 
 .display-output {
+  background-color: darkgreen;
   text-align: center;
+  height: 100%;
+  width: 80vw;
+
+  & img {
+    max-height: 80vw;
+    width: auto;
+    margin-top: 5vh;
+    position: relative;
+    z-index: 1;
+  }
 }
 
 .keyboard {
