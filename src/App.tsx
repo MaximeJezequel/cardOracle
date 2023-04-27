@@ -2,8 +2,9 @@ import { useState } from "react"
 import "./App.scss"
 import Display from "./components/Display"
 import DisplayOne from "./components/DisplayOne"
-// import KeyboardLeft from "./components/KeyboardLeft"
+import KeyboardLeft from "./components/KeyboardLeft"
 import KeyboardTop from "./components/KeyboardTop"
+import Menu from "./components/Menu"
 import { oracle } from "./utils/oracle"
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
   const [currentNumber, setCurrentNumber] = useState<any>("")
   const [currentColor, setCurrentColor] = useState<any>("")
   const [prediction, setPrediction] = useState<any>("")
+  const [favOrientation, setFavOrientation] = useState("top")
   const [stack, setStack] = useState(["QS", "10D", "6C", "AH", "9D"])
 
   const handleInputNumber = (x: any) => {
@@ -82,6 +84,7 @@ function App() {
 
   return (
     <div className="App">
+      <Menu setFavOrientation={setFavOrientation} />
       {currentStep % 2 == 0 && (
         <Display input={input} erase={erase} currentStep={currentStep} />
       )}
@@ -93,16 +96,27 @@ function App() {
           setCurrentStep={setCurrentStep}
         />
       )}
-
-      <KeyboardTop
-        input={input}
-        limit={limit}
-        predict={predict}
-        currentStep={currentStep}
-        handleInputColor={handleInputColor}
-        handleInputNumber={handleInputNumber}
-        clear={clear}
-      />
+      {favOrientation == "top" ? (
+        <KeyboardTop
+          input={input}
+          limit={limit}
+          predict={predict}
+          currentStep={currentStep}
+          handleInputColor={handleInputColor}
+          handleInputNumber={handleInputNumber}
+          clear={clear}
+        />
+      ) : (
+        <KeyboardLeft
+          input={input}
+          limit={limit}
+          predict={predict}
+          currentStep={currentStep}
+          handleInputColor={handleInputColor}
+          handleInputNumber={handleInputNumber}
+          clear={clear}
+        />
+      )}
     </div>
   )
 }

@@ -16,7 +16,7 @@ const Display = ({
             .join()
             .split(",")
             .map((x: any) => (
-              <img key={x} src={`/cards/${x}.png`} />
+              <img key={x} src={`/cards/${x}.png`} alt={`${x}`} />
             ))}
         </div>
       ) : (

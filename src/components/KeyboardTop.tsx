@@ -90,7 +90,7 @@ const KeyboardTop = ({
             K
           </button>
           <div
-            className="suitBtn flex-aic-jcc next"
+            className="cardBtn flex-aic-jcc next"
             onClick={() => clear()}
             tabIndex={0}
           >

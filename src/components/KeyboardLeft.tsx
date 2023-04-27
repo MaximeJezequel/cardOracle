@@ -53,7 +53,7 @@ const KeyboardLeft = ({
             <Diamonds />
           </div>
           <div
-            className="suitBtn flex-aic-jcc next"
+            className="cardBtn flex-aic-jcc next"
             onClick={() => clear()}
             tabIndex={0}
           >
