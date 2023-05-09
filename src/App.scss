@@ -179,6 +179,40 @@ $secondary-button--light: #d2d2d2;
   }
 }
 
+.flip-card {
+  background-color: transparent;
+  max-height: 80vw;
+  width: auto;
+  perspective: 600px;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transform-origin: center right;
+  transition: transform 1s;
+}
+
+.isFlipped {
+  transform: translateX(-100%) rotateY(-180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+.card-front {
+  transform: rotateY(180deg);
+}
+
 // *** keyboard ********************************
 .keyboard {
   display: grid;

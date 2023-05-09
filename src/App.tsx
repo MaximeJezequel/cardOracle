@@ -7,21 +7,41 @@ import KeyboardTop from "./components/KeyboardTop"
 import Menu from "./components/Menu"
 import { oracle } from "./utils/oracle"
 
+interface IStack {
+  stackZero: string[]
+  stackOne: string[]
+  stackTwo: string[]
+  stackFinal: string[]
+}
+
 function App() {
   const [currentStep, setCurrentStep] = useState<number>(0)
-  const [input, setInput] = useState<string[]>([])
   const [limit, setLimit] = useState<number>(4)
+  const [input, setInput] = useState<string[]>([])
   const [currentNumber, setCurrentNumber] = useState<any>("")
   const [currentColor, setCurrentColor] = useState<any>("")
   const [prediction, setPrediction] = useState<any>("")
-  const [favOrientation, setFavOrientation] = useState("top")
-  const [stack, setStack] = useState(["QS", "10D", "6C", "AH", "9D"])
+  const [favOrientation, setFavOrientation] = useState<string>("top")
+  const [favBackDesign, setFavBackDesign] = useState<string>("red")
+  const [stack, setStack] = useState<IStack>({
+    stackZero: ["QS", "10D", "6C", "AH", "9D"],
+    stackOne: [],
+    stackTwo: [],
+    stackFinal: [],
+  })
 
-  const handleInputNumber = (x: any) => {
+  const handleInputNumber = (x: number | string) => {
     if (currentColor) {
+      const stackGlobal = [
+        ...stack.stackZero,
+        ...stack.stackOne,
+        ...stack.stackTwo,
+      ]
       if (
         input.length < limit &&
-        [currentColor + x, x + currentColor].every((i) => !input.includes(i))
+        [currentColor + x, x + currentColor].every(
+          (i) => !input.includes(i) && !stackGlobal.includes(i)
+        )
       ) {
         setInput([...input, currentColor + x])
         setCurrentColor("")
@@ -32,11 +52,18 @@ function App() {
     }
   }
 
-  const handleInputColor = (x: any) => {
+  const handleInputColor = (x: string | number) => {
     if (currentNumber) {
+      const stackGlobal = [
+        ...stack.stackZero,
+        ...stack.stackOne,
+        ...stack.stackTwo,
+      ]
       if (
         input.length < limit &&
-        [currentNumber + x, x + currentNumber].every((i) => !input.includes(i))
+        [currentNumber + x, x + currentNumber].every(
+          (i) => !input.includes(i) && !stackGlobal.includes(i)
+        )
       ) {
         setInput([...input, currentNumber + x])
         setCurrentColor("")
@@ -60,16 +87,40 @@ function App() {
     setPrediction("")
     setLimit(4)
     setCurrentStep(0)
+    setStack({
+      stackZero: ["QS", "10D", "6C", "AH", "9D"],
+      stackOne: [],
+      stackTwo: [],
+      stackFinal: [],
+    })
   }
 
   const predict = () => {
-    const result = oracle(input)
+    let result
+    console.log("myinput", input)
+    if (currentStep === 0) {
+      result = oracle(input)
+      setStack({
+        ...stack,
+        stackOne: [...stack.stackOne, ...input],
+      })
+    }
+
+    if (currentStep === 2) {
+      result = []
+      setStack({
+        ...stack,
+        stackTwo: [...stack.stackTwo, ...input],
+      })
+    }
     setPrediction(result)
+
+    //Resets & counts
     setCurrentColor("")
     setCurrentNumber("")
     setInput([])
-    setLimit(limit - 1)
-    setCurrentStep(currentStep + 1)
+    setLimit((limit) => limit - 1)
+    setCurrentStep((currentStep) => currentStep + 1)
   }
 
   {
@@ -94,6 +145,9 @@ function App() {
           prediction={prediction}
           currentStep={currentStep}
           setCurrentStep={setCurrentStep}
+          stack={stack}
+          setStack={setStack}
+          favBackDesign={favBackDesign}
         />
       )}
       {favOrientation == "top" ? (

@@ -1,4 +1,4 @@
-const Prediction = ({ prediction }: { prediction: any }) => {
+const Prediction = ({ prediction }: { prediction: string }) => {
   return (
     <div className="display-output">
       <img src={`http://deckofcardsapi.com/static/img/${prediction}.png`} />

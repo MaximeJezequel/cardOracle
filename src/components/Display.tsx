@@ -5,7 +5,7 @@ const Display = ({
 }: {
   input: any
   erase: any
-  currentStep: any
+  currentStep: number
 }) => {
   return (
     <div className="display">
