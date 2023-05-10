@@ -52,6 +52,23 @@ function App() {
     }
   }
 
+  const handleInputNumberTwo = (x: number | string) => {
+    if (currentColor) {
+      if (
+        input.length < limit &&
+        [currentColor + x, x + currentColor].some(
+          (i) => !input.includes(i) && stack.stackZero.includes(i)
+        )
+      ) {
+        setInput([...input, currentColor + x])
+        setCurrentColor("")
+        setCurrentNumber("")
+      }
+    } else {
+      setCurrentNumber(x)
+    }
+  }
+
   const handleInputColor = (x: string | number) => {
     if (currentNumber) {
       const stackGlobal = [
@@ -63,6 +80,23 @@ function App() {
         input.length < limit &&
         [currentNumber + x, x + currentNumber].every(
           (i) => !input.includes(i) && !stackGlobal.includes(i)
+        )
+      ) {
+        setInput([...input, currentNumber + x])
+        setCurrentColor("")
+        setCurrentNumber("")
+      }
+    } else {
+      setCurrentColor(x)
+    }
+  }
+
+  const handleInputColorTwo = (x: string | number) => {
+    if (currentNumber) {
+      if (
+        input.length < limit &&
+        [currentNumber + x, x + currentNumber].some(
+          (i) => !input.includes(i) && stack.stackZero.includes(i)
         )
       ) {
         setInput([...input, currentNumber + x])
@@ -107,12 +141,16 @@ function App() {
     }
 
     if (currentStep === 2) {
-      result = []
+      result = stack.stackZero
+        .slice(0, -1)
+        .filter((element) => !input.includes(element))
       setStack({
         ...stack,
         stackTwo: [...stack.stackTwo, ...input],
       })
     }
+
+    console.log("result: " + result)
     setPrediction(result)
 
     //Resets & counts
@@ -156,8 +194,12 @@ function App() {
           limit={limit}
           predict={predict}
           currentStep={currentStep}
-          handleInputColor={handleInputColor}
-          handleInputNumber={handleInputNumber}
+          handleInputColor={
+            currentStep == 0 ? handleInputColor : handleInputColorTwo
+          }
+          handleInputNumber={
+            currentStep == 0 ? handleInputNumber : handleInputNumberTwo
+          }
           clear={clear}
         />
       ) : (

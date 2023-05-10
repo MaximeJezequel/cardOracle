@@ -16,18 +16,20 @@ const DisplayOne = ({
   favBackDesign: string
 }) => {
   const goToNext = () => {
-    console.log("goToNext")
-    setCurrentStep(currentStep + 1)
-    if (currentStep === 1)
-      setStack({
-        ...stack,
-        stackOne: [...stack.stackOne, prediction],
-      })
-    if (currentStep === 3)
-      setStack({
-        ...stack,
-        stackTwo: [...stack.stackOne, prediction],
-      })
+    if (!isFlipped) setIsFlipped(!isFlipped)
+    else {
+      setCurrentStep(currentStep + 1)
+      if (currentStep === 1)
+        setStack({
+          ...stack,
+          stackOne: [...stack.stackOne, prediction],
+        })
+      if (currentStep === 3)
+        setStack({
+          ...stack,
+          stackTwo: [...stack.stackTwo, ...prediction],
+        })
+    }
   }
 
   const [isFlipped, setIsFlipped] = useState<boolean>(false)
@@ -38,7 +40,7 @@ const DisplayOne = ({
       <div className="display-output">
         <div className="flip-card">
           <div className={`card ${isFlipped ? "isFlipped" : ""}`}>
-            <div className="card-back" onClick={() => setIsFlipped(!isFlipped)}>
+            <div className="card-back" onClick={() => goToNext()}>
               <img src={`/cards/${favBackDesign}BackDesign.png`} />
             </div>
             <div className="card-front">
