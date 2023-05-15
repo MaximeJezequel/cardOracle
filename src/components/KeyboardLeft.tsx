@@ -96,7 +96,7 @@ const KeyboardLeft = ({
           >
             K
           </button>
-          {limit > 2 && (
+          {limit > 1 && (
             <button
               disabled={input.length != limit}
               className="cardBtn flex-aic-jcc long"
@@ -105,7 +105,7 @@ const KeyboardLeft = ({
               Predict
             </button>
           )}
-          {limit == 2 && (
+          {limit == 1 && (
             <button
               // disabled={input.length != limit}
               className="cardBtn flex-aic-jcc long"

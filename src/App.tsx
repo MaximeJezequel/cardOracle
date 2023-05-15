@@ -11,7 +11,13 @@ interface IStack {
   stackZero: string[]
   stackOne: string[]
   stackTwo: string[]
+  stackThree: string[]
   stackFinal: string[]
+}
+
+interface IPreferences {
+  orientation: string
+  backDesign: string
 }
 
 function App() {
@@ -21,90 +27,145 @@ function App() {
   const [currentNumber, setCurrentNumber] = useState<any>("")
   const [currentColor, setCurrentColor] = useState<any>("")
   const [prediction, setPrediction] = useState<any>("")
+  const [preferences, setPreferences] = useState<IPreferences>({
+    orientation: "top",
+    backDesign: "red",
+  })
   const [favOrientation, setFavOrientation] = useState<string>("top")
   const [favBackDesign, setFavBackDesign] = useState<string>("red")
   const [stack, setStack] = useState<IStack>({
     stackZero: ["QS", "10D", "6C", "AH", "9D"],
     stackOne: [],
     stackTwo: [],
+    stackThree: [],
     stackFinal: [],
   })
 
   const handleInputNumber = (x: number | string) => {
-    if (currentColor) {
-      const stackGlobal = [
-        ...stack.stackZero,
-        ...stack.stackOne,
-        ...stack.stackTwo,
-      ]
-      if (
-        input.length < limit &&
-        [currentColor + x, x + currentColor].every(
-          (i) => !input.includes(i) && !stackGlobal.includes(i)
-        )
-      ) {
-        setInput([...input, currentColor + x])
-        setCurrentColor("")
-        setCurrentNumber("")
-      }
-    } else {
+    if (!currentColor) {
       setCurrentNumber(x)
+      return
+    }
+
+    const stackGlobal = [
+      ...stack.stackZero,
+      ...stack.stackOne,
+      ...stack.stackTwo,
+    ]
+
+    if (
+      input.length < limit &&
+      [currentColor + x, x + currentColor].every(
+        (i) => !input.includes(i) && !stackGlobal.includes(i)
+      )
+    ) {
+      setInput([...input, currentColor + x])
+      setCurrentColor("")
+      setCurrentNumber("")
     }
   }
 
   const handleInputNumberTwo = (x: number | string) => {
-    if (currentColor) {
-      if (
-        input.length < limit &&
-        [currentColor + x, x + currentColor].some(
-          (i) => !input.includes(i) && stack.stackZero.includes(i)
-        )
-      ) {
-        setInput([...input, currentColor + x])
-        setCurrentColor("")
-        setCurrentNumber("")
-      }
-    } else {
+    if (!currentColor) {
       setCurrentNumber(x)
+      return
+    }
+    if (
+      input.length < limit &&
+      [currentColor + x, x + currentColor].some(
+        (i) =>
+          !input.includes(i) &&
+          !stack.stackOne.includes(i) &&
+          stack.stackZero.slice(0, -1).includes(i)
+      )
+    ) {
+      setInput([...input, currentColor + x])
+      setCurrentColor("")
+      setCurrentNumber("")
+    }
+  }
+
+  const handleInputNumberThree = (x: number | string) => {
+    if (!currentColor) {
+      setCurrentNumber(x)
+      return
+    }
+    if (
+      input.length < limit &&
+      [currentColor + x, x + currentColor].every(
+        (i) =>
+          !input.includes(i) &&
+          !stack.stackOne.includes(i) &&
+          !stack.stackTwo.includes(i)
+      )
+    ) {
+      setInput([...input, currentColor + x])
+      setCurrentColor("")
+      setCurrentNumber("")
     }
   }
 
   const handleInputColor = (x: string | number) => {
-    if (currentNumber) {
-      const stackGlobal = [
-        ...stack.stackZero,
-        ...stack.stackOne,
-        ...stack.stackTwo,
-      ]
-      if (
-        input.length < limit &&
-        [currentNumber + x, x + currentNumber].every(
-          (i) => !input.includes(i) && !stackGlobal.includes(i)
-        )
-      ) {
-        setInput([...input, currentNumber + x])
-        setCurrentColor("")
-        setCurrentNumber("")
-      }
-    } else {
+    if (!currentNumber) {
       setCurrentColor(x)
+      return
+    }
+
+    const stackGlobal = [
+      ...stack.stackZero,
+      ...stack.stackOne,
+      ...stack.stackTwo,
+    ]
+    if (
+      input.length < limit &&
+      [currentNumber + x, x + currentNumber].every(
+        (i) => !input.includes(i) && !stackGlobal.includes(i)
+      )
+    ) {
+      setInput([...input, currentNumber + x])
+      setCurrentColor("")
+      setCurrentNumber("")
     }
   }
 
   const handleInputColorTwo = (x: string | number) => {
-    if (currentNumber) {
-      if (
-        input.length < limit &&
-        [currentNumber + x, x + currentNumber].some(
-          (i) => !input.includes(i) && stack.stackZero.includes(i)
-        )
-      ) {
-        setInput([...input, currentNumber + x])
-        setCurrentColor("")
-        setCurrentNumber("")
-      }
-    } else {
+    if (!currentNumber) {
       setCurrentColor(x)
+      return
+    }
+    if (
+      input.length < limit &&
+      [currentNumber + x, x + currentNumber].some(
+        (i) =>
+          !input.includes(i) &&
+          !stack.stackOne.includes(i) &&
+          stack.stackZero.slice(0, -1).includes(i)
+      )
+    ) {
+      setInput([...input, currentNumber + x])
+      setCurrentColor("")
+      setCurrentNumber("")
+    }
+  }
+
+  const handleInputColorThree = (x: string | number) => {
+    if (!currentNumber) {
+      setCurrentColor(x)
+      return
+    }
+
+    if (
+      input.length < limit &&
+      [currentNumber + x, x + currentNumber].every(
+        (i) =>
+          !input.includes(i) &&
+          !stack.stackOne.includes(i) &&
+          !stack.stackTwo.includes(i)
+      )
+    ) {
+      setInput([...input, currentNumber + x])
+      setCurrentColor("")
+      setCurrentNumber("")
     }
   }
 
@@ -125,6 +186,7 @@ function App() {
       stackZero: ["QS", "10D", "6C", "AH", "9D"],
       stackOne: [],
       stackTwo: [],
+      stackThree: [],
       stackFinal: [],
     })
   }
@@ -132,6 +194,8 @@ function App() {
   const predict = () => {
     let result
     console.log("myinput", input)
+
+    //Phase1
     if (currentStep === 0) {
       result = oracle(input)
       setStack({
@@ -140,13 +204,23 @@ function App() {
       })
     }
 
+    //Phase2
     if (currentStep === 2) {
       result = stack.stackZero
-        .slice(0, -1)
         .filter((element) => !input.includes(element))
+        .slice(0, -1)
       setStack({
         ...stack,
         stackTwo: [...stack.stackTwo, ...input],
+      })
+    }
+
+    //Phase3
+    if (currentStep === 4) {
+      result = stack.stackZero.slice(-1)
+      setStack({
+        ...stack,
+        stackThree: [...stack.stackThree, ...input],
       })
     }
 
@@ -195,10 +269,22 @@ function App() {
           predict={predict}
           currentStep={currentStep}
           handleInputColor={
-            currentStep == 0 ? handleInputColor : handleInputColorTwo
+            currentStep === 0
+              ? handleInputColor
+              : currentStep === 2
+              ? handleInputColorTwo
+              : currentStep === 4
+              ? handleInputColorThree
+              : undefined
           }
           handleInputNumber={
-            currentStep == 0 ? handleInputNumber : handleInputNumberTwo
+            currentStep === 0
+              ? handleInputNumber
+              : currentStep === 2
+              ? handleInputNumberTwo
+              : currentStep === 4
+              ? handleInputNumberThree
+              : undefined
           }
           clear={clear}
         />
