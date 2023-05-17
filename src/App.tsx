@@ -2,6 +2,7 @@ import { useState } from "react"
 import "./App.scss"
 import Display from "./components/Display"
 import DisplayOne from "./components/DisplayOne"
+import DisplayStack from "./components/DisplayStack"
 import KeyboardLeft from "./components/KeyboardLeft"
 import KeyboardTop from "./components/KeyboardTop"
 import Menu from "./components/Menu"
@@ -206,11 +207,11 @@ function App() {
   return (
     <div className="App">
       <Menu setFavOrientation={setFavOrientation} />
-      {currentStep % 2 === 0 && (
+      {currentStep % 2 === 0 && currentStep < 7 && (
         <Display input={input} erase={erase} currentStep={currentStep} />
       )}
 
-      {currentStep % 2 === 1 && (
+      {currentStep % 2 === 1 && currentStep < 7 && (
         <DisplayOne
           prediction={prediction}
           currentStep={currentStep}
@@ -220,29 +221,32 @@ function App() {
           favBackDesign={favBackDesign}
         />
       )}
-      {favOrientation === "top" ? (
-        <KeyboardTop
-          input={input}
-          limit={limit}
-          predict={predict}
-          finalPredict={finalPredict}
-          currentStep={currentStep}
-          handleInputColor={handleInputColor}
-          handleInputNumber={handleInputNumber}
-          clear={clear}
-        />
-      ) : (
-        <KeyboardLeft
-          input={input}
-          limit={limit}
-          predict={predict}
-          finalPredict={finalPredict}
-          currentStep={currentStep}
-          handleInputColor={handleInputColor}
-          handleInputNumber={handleInputNumber}
-          clear={clear}
-        />
-      )}
+      {currentStep === 7 && <DisplayStack stack={stack} setStack={setStack} />}
+      {favOrientation === "top"
+        ? currentStep < 7 && (
+            <KeyboardTop
+              input={input}
+              limit={limit}
+              predict={predict}
+              finalPredict={finalPredict}
+              currentStep={currentStep}
+              handleInputColor={handleInputColor}
+              handleInputNumber={handleInputNumber}
+              clear={clear}
+            />
+          )
+        : currentStep < 7 && (
+            <KeyboardLeft
+              input={input}
+              limit={limit}
+              predict={predict}
+              finalPredict={finalPredict}
+              currentStep={currentStep}
+              handleInputColor={handleInputColor}
+              handleInputNumber={handleInputNumber}
+              clear={clear}
+            />
+          )}
     </div>
   )
 }

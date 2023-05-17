@@ -51,24 +51,16 @@ const DisplayOne = memo(
       <div className="displayone">
         <div className="display-reset">{currentStep}</div>
         <div className="display-output">
-          {currentStep == 7 ? (
-            <ul>
-              {stack.stackFinal.map((x: any) => (
-                <li key={x}>{x}</li>
-              ))}
-            </ul>
-          ) : (
-            <div className="flip-card">
-              <div className={`card ${isFlipped ? "isFlipped" : ""}`}>
-                <div className="card-back" onClick={() => goToNext()}>
-                  <img src={`/cards/${favBackDesign}BackDesign.png`} />
-                </div>
-                <div className="card-front">
-                  <img src={`/cards/${prediction}.png`} />
-                </div>
+          <div className="flip-card">
+            <div className={`card ${isFlipped ? "isFlipped" : ""}`}>
+              <div className="card-back" onClick={() => goToNext()}>
+                <img src={`/cards/${favBackDesign}BackDesign.png`} />
+              </div>
+              <div className="card-front">
+                <img src={`/cards/${prediction}.png`} />
               </div>
             </div>
-          )}
+          </div>
         </div>
         {/* <button
         className="cardBtn long"

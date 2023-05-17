@@ -179,6 +179,23 @@ $secondary-button--light: #d2d2d2;
   }
 }
 
+.displayfinal {
+  display: flex;
+  flex-direction: column;
+  height: 100vw;
+  width: 100%;
+  position: relative;
+}
+
+.display-final {
+  bottom: -20vh;
+  right: 10vw;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  position: relative;
+}
+
 .flip-card {
   background-color: transparent;
   max-height: 80vw;
@@ -201,7 +218,8 @@ $secondary-button--light: #d2d2d2;
 }
 
 .card-front,
-.card-back {
+.card-back,
+.card-stack {
   position: absolute;
   width: 100%;
   height: 100%;
