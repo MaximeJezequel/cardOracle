@@ -187,10 +187,10 @@ function App() {
     //Phase1
     if (currentStep === 0) {
       result = oracle(input)
-      setStack({
-        ...stack,
-        stackOne: [...stack.stackOne, ...input],
-      })
+      setStack((prevStack) => ({
+        ...prevStack,
+        stackOne: [...prevStack.stackOne, ...input],
+      }))
     }
 
     //Phase2
@@ -198,19 +198,19 @@ function App() {
       result = stack.stackZero
         .filter((element) => !convertStack(input).includes(element))
         .slice(0, -1)
-      setStack({
-        ...stack,
-        stackTwo: [...stack.stackTwo, ...convertStack(input)],
-      })
+      setStack((prevStack) => ({
+        ...prevStack,
+        stackTwo: [...prevStack.stackTwo, ...convertStack(input)],
+      }))
     }
 
     //Phase3
     if (currentStep === 4) {
       result = stack.stackZero.slice(-1)
-      setStack({
-        ...stack,
-        stackThree: [...stack.stackThree, ...input],
-      })
+      setStack((prevStack) => ({
+        ...prevStack,
+        stackThree: [...prevStack.stackThree, ...input],
+      }))
     }
 
     console.log("result: " + result)
@@ -249,11 +249,11 @@ function App() {
   return (
     <div className="App">
       <Menu setFavOrientation={setFavOrientation} />
-      {currentStep % 2 == 0 && (
+      {currentStep % 2 === 0 && (
         <Display input={input} erase={erase} currentStep={currentStep} />
       )}
 
-      {currentStep % 2 == 1 && (
+      {currentStep % 2 === 1 && (
         <DisplayOne
           prediction={prediction}
           currentStep={currentStep}
@@ -263,7 +263,7 @@ function App() {
           favBackDesign={favBackDesign}
         />
       )}
-      {favOrientation == "top" ? (
+      {favOrientation === "top" ? (
         <KeyboardTop
           input={input}
           limit={limit}
