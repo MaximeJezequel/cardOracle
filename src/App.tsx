@@ -46,112 +46,69 @@ function App() {
       setCurrentNumber(x)
       return
     }
-    if (
-      input.length < limit &&
-      [currentColor + x, x + currentColor].every(
-        (i) => !input.includes(i) && !stack.stackZero.includes(i)
-      )
-    ) {
+    let condition = false
+    switch (currentStep) {
+      case 0:
+        condition = [currentColor + x, x + currentColor].every(
+          (i) => !input.includes(i) && !stack.stackZero.includes(i)
+        )
+        break
+      case 2:
+        condition = [currentColor + x, x + currentColor].some(
+          (i) =>
+            !input.includes(i) &&
+            !stack.stackOne.includes(i) &&
+            stack.stackZero.slice(0, -1).includes(i)
+        )
+        break
+      case 4:
+        condition = [currentColor + x, x + currentColor].every(
+          (i) =>
+            !input.includes(i) &&
+            !stack.stackZero.includes(i) &&
+            !stack.stackOne.includes(i)
+        )
+        break
+    }
+
+    if (input.length < limit && condition) {
       setInput([...input, currentColor + x])
       setCurrentColor("")
       setCurrentNumber("")
     }
   }
 
-  const handleInputNumberTwo = (x: number | string) => {
-    if (!currentColor) {
-      setCurrentNumber(x)
-      return
-    }
-
-    if (
-      input.length < limit &&
-      [currentColor + x, x + currentColor].some(
-        (i) =>
-          !input.includes(i) &&
-          !stack.stackOne.includes(i) &&
-          stack.stackZero.slice(0, -1).includes(i)
-      )
-    ) {
-      setInput([...input, currentColor + x])
-      setCurrentColor("")
-      setCurrentNumber("")
-    }
-  }
-
-  const handleInputNumberThree = (x: number | string) => {
-    if (!currentColor) {
-      setCurrentNumber(x)
-      return
-    }
-    if (
-      input.length < limit &&
-      [currentColor + x, x + currentColor].every(
-        (i) =>
-          !input.includes(i) &&
-          !stack.stackZero.includes(i) &&
-          !stack.stackOne.includes(i)
-      )
-    ) {
-      setInput([...input, currentColor + x])
-      setCurrentColor("")
-      setCurrentNumber("")
-    }
-  }
-
-  const handleInputColor = (x: string | number) => {
+  const handleInputColor = (x: number | string) => {
     if (!currentNumber) {
       setCurrentColor(x)
       return
     }
-    if (
-      input.length < limit &&
-      [currentNumber + x, x + currentNumber].every(
-        (i) => !input.includes(i) && !stack.stackZero.includes(i)
-      )
-    ) {
-      setInput([...input, currentNumber + x])
-      setCurrentColor("")
-      setCurrentNumber("")
-    }
-  }
-
-  const handleInputColorTwo = (x: string | number) => {
-    if (!currentNumber) {
-      setCurrentColor(x)
-      return
-    }
-
-    if (
-      input.length < limit &&
-      [currentNumber + x, x + currentNumber].some(
-        (i) =>
-          !input.includes(i) &&
-          !stack.stackOne.includes(i) &&
-          stack.stackZero.slice(0, -1).includes(i)
-      )
-    ) {
-      setInput([...input, currentNumber + x])
-      setCurrentColor("")
-      setCurrentNumber("")
-    }
-  }
-
-  const handleInputColorThree = (x: string | number) => {
-    if (!currentNumber) {
-      setCurrentColor(x)
-      return
+    let condition = false
+    switch (currentStep) {
+      case 0:
+        condition = [currentNumber + x, x + currentNumber].every(
+          (i) => !input.includes(i) && !stack.stackZero.includes(i)
+        )
+        break
+      case 2:
+        condition = [currentNumber + x, x + currentNumber].some(
+          (i) =>
+            !input.includes(i) &&
+            !stack.stackOne.includes(i) &&
+            stack.stackZero.slice(0, -1).includes(i)
+        )
+        break
+      case 4:
+        condition = [currentNumber + x, x + currentNumber].every(
+          (i) =>
+            !input.includes(i) &&
+            !stack.stackZero.includes(i) &&
+            !stack.stackOne.includes(i)
+        )
+        break
     }
 
-    if (
-      input.length < limit &&
-      [currentNumber + x, x + currentNumber].every(
-        (i) =>
-          !input.includes(i) &&
-          !stack.stackZero.includes(i) &&
-          !stack.stackOne.includes(i)
-      )
-    ) {
+    if (input.length < limit && condition) {
       setInput([...input, currentNumber + x])
       setCurrentColor("")
       setCurrentNumber("")
@@ -159,7 +116,7 @@ function App() {
   }
 
   const erase = () => {
-    setInput([...input].slice(0, -1))
+    setInput((prevInput) => prevInput.slice(0, -1))
     setCurrentColor("")
     setCurrentNumber("")
   }
@@ -220,8 +177,8 @@ function App() {
     setCurrentColor("")
     setCurrentNumber("")
     setInput([])
-    setLimit((limit) => limit - 1)
-    setCurrentStep((currentStep) => currentStep + 1)
+    setLimit((prevLimit) => prevLimit - 1)
+    setCurrentStep((prevStep) => prevStep + 1)
   }
 
   const finalPredict = () => {
@@ -270,24 +227,8 @@ function App() {
           predict={predict}
           finalPredict={finalPredict}
           currentStep={currentStep}
-          handleInputColor={
-            currentStep === 0
-              ? handleInputColor
-              : currentStep === 2
-              ? handleInputColorTwo
-              : currentStep === 4
-              ? handleInputColorThree
-              : undefined
-          }
-          handleInputNumber={
-            currentStep === 0
-              ? handleInputNumber
-              : currentStep === 2
-              ? handleInputNumberTwo
-              : currentStep === 4
-              ? handleInputNumberThree
-              : undefined
-          }
+          handleInputColor={handleInputColor}
+          handleInputNumber={handleInputNumber}
           clear={clear}
         />
       ) : (

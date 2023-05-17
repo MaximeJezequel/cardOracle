@@ -20,21 +20,28 @@ const DisplayOne = memo(
       if (!isFlipped) setIsFlipped(!isFlipped)
       else {
         setCurrentStep(currentStep + 1)
-        if (currentStep === 1)
-          setStack({
-            ...stack,
-            stackOne: [...stack.stackOne, prediction],
-          })
-        if (currentStep === 3)
-          setStack({
-            ...stack,
-            stackTwo: [...stack.stackTwo, ...prediction],
-          })
-        if (currentStep === 5)
-          setStack({
-            ...stack,
-            stackThree: [...stack.stackThree, ...prediction],
-          })
+        switch (currentStep) {
+          case 1:
+            setStack({
+              ...stack,
+              stackOne: [...stack.stackOne, prediction],
+            })
+            break
+          case 3:
+            setStack({
+              ...stack,
+              stackTwo: [...stack.stackTwo, ...prediction],
+            })
+            break
+          case 5:
+            setStack({
+              ...stack,
+              stackThree: [...stack.stackThree, ...prediction],
+            })
+            break
+          default:
+            break
+        }
       }
     }
 
@@ -47,7 +54,7 @@ const DisplayOne = memo(
           {currentStep == 7 ? (
             <ul>
               {stack.stackFinal.map((x: any) => (
-                <li>{x}</li>
+                <li key={x}>{x}</li>
               ))}
             </ul>
           ) : (
