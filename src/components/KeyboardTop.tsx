@@ -7,6 +7,7 @@ const KeyboardTop = ({
   input,
   limit,
   predict,
+  finalPredict,
   currentStep,
   handleInputColor,
   handleInputNumber,
@@ -15,6 +16,7 @@ const KeyboardTop = ({
   input: any
   limit: any
   predict: any
+  finalPredict: any
   currentStep: any
   handleInputColor: any
   handleInputNumber: any
@@ -94,7 +96,8 @@ const KeyboardTop = ({
             onClick={() => clear()}
             tabIndex={0}
           >
-            ...
+            .{currentStep > 1 ? "." : <span>&nbsp;</span>}
+            {currentStep > 3 ? "." : <span>&nbsp;</span>}
           </div>
           {limit > 1 && (
             <button
@@ -109,7 +112,7 @@ const KeyboardTop = ({
             <button
               // disabled={input.length != limit}
               className="cardBtn flex-aic-jcc long"
-              onClick={() => predict()}
+              onClick={() => finalPredict()}
             >
               ... Final
             </button>

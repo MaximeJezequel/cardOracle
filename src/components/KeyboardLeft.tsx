@@ -7,6 +7,7 @@ const KeyboardLeft = ({
   input,
   limit,
   predict,
+  finalPredict,
   currentStep,
   handleInputColor,
   handleInputNumber,
@@ -15,6 +16,7 @@ const KeyboardLeft = ({
   input: any
   limit: any
   predict: any
+  finalPredict: any
   currentStep: any
   handleInputColor: any
   handleInputNumber: any
@@ -57,7 +59,8 @@ const KeyboardLeft = ({
             onClick={() => clear()}
             tabIndex={0}
           >
-            ...
+            .{currentStep > 1 ? "." : <span>&nbsp;</span>}
+            {currentStep > 3 ? "." : <span>&nbsp;</span>}
           </div>
         </div>
       )}
@@ -109,7 +112,7 @@ const KeyboardLeft = ({
             <button
               // disabled={input.length != limit}
               className="cardBtn flex-aic-jcc long"
-              onClick={() => predict()}
+              onClick={() => finalPredict()}
             >
               ... Final
             </button>

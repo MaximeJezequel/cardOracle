@@ -29,6 +29,11 @@ const DisplayOne = ({
           ...stack,
           stackTwo: [...stack.stackTwo, ...prediction],
         })
+      if (currentStep === 5)
+        setStack({
+          ...stack,
+          stackThree: [...stack.stackThree, ...prediction],
+        })
     }
   }
 
@@ -38,16 +43,24 @@ const DisplayOne = ({
     <div className="displayone">
       <div className="display-reset">{currentStep}</div>
       <div className="display-output">
-        <div className="flip-card">
-          <div className={`card ${isFlipped ? "isFlipped" : ""}`}>
-            <div className="card-back" onClick={() => goToNext()}>
-              <img src={`/cards/${favBackDesign}BackDesign.png`} />
-            </div>
-            <div className="card-front">
-              <img src={`/cards/${prediction}.png`} />
+        {currentStep == 7 ? (
+          <ul>
+            {stack.stackFinal.map((x: any) => (
+              <li>{x}</li>
+            ))}
+          </ul>
+        ) : (
+          <div className="flip-card">
+            <div className={`card ${isFlipped ? "isFlipped" : ""}`}>
+              <div className="card-back" onClick={() => goToNext()}>
+                <img src={`/cards/${favBackDesign}BackDesign.png`} />
+              </div>
+              <div className="card-front">
+                <img src={`/cards/${prediction}.png`} />
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
       {/* <button
         className="cardBtn long"

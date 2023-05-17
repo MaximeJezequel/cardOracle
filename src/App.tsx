@@ -5,7 +5,7 @@ import DisplayOne from "./components/DisplayOne"
 import KeyboardLeft from "./components/KeyboardLeft"
 import KeyboardTop from "./components/KeyboardTop"
 import Menu from "./components/Menu"
-import { oracle } from "./utils/oracle"
+import { convertStack, oracle } from "./utils/oracle"
 
 interface IStack {
   stackZero: string[]
@@ -46,17 +46,10 @@ function App() {
       setCurrentNumber(x)
       return
     }
-
-    const stackGlobal = [
-      ...stack.stackZero,
-      ...stack.stackOne,
-      ...stack.stackTwo,
-    ]
-
     if (
       input.length < limit &&
       [currentColor + x, x + currentColor].every(
-        (i) => !input.includes(i) && !stackGlobal.includes(i)
+        (i) => !input.includes(i) && !stack.stackZero.includes(i)
       )
     ) {
       setInput([...input, currentColor + x])
@@ -70,6 +63,7 @@ function App() {
       setCurrentNumber(x)
       return
     }
+
     if (
       input.length < limit &&
       [currentColor + x, x + currentColor].some(
@@ -95,8 +89,8 @@ function App() {
       [currentColor + x, x + currentColor].every(
         (i) =>
           !input.includes(i) &&
-          !stack.stackOne.includes(i) &&
-          !stack.stackTwo.includes(i)
+          !stack.stackZero.includes(i) &&
+          !stack.stackOne.includes(i)
       )
     ) {
       setInput([...input, currentColor + x])
@@ -110,16 +104,10 @@ function App() {
       setCurrentColor(x)
       return
     }
-
-    const stackGlobal = [
-      ...stack.stackZero,
-      ...stack.stackOne,
-      ...stack.stackTwo,
-    ]
     if (
       input.length < limit &&
       [currentNumber + x, x + currentNumber].every(
-        (i) => !input.includes(i) && !stackGlobal.includes(i)
+        (i) => !input.includes(i) && !stack.stackZero.includes(i)
       )
     ) {
       setInput([...input, currentNumber + x])
@@ -133,6 +121,7 @@ function App() {
       setCurrentColor(x)
       return
     }
+
     if (
       input.length < limit &&
       [currentNumber + x, x + currentNumber].some(
@@ -159,8 +148,8 @@ function App() {
       [currentNumber + x, x + currentNumber].every(
         (i) =>
           !input.includes(i) &&
-          !stack.stackOne.includes(i) &&
-          !stack.stackTwo.includes(i)
+          !stack.stackZero.includes(i) &&
+          !stack.stackOne.includes(i)
       )
     ) {
       setInput([...input, currentNumber + x])
@@ -207,11 +196,11 @@ function App() {
     //Phase2
     if (currentStep === 2) {
       result = stack.stackZero
-        .filter((element) => !input.includes(element))
+        .filter((element) => !convertStack(input).includes(element))
         .slice(0, -1)
       setStack({
         ...stack,
-        stackTwo: [...stack.stackTwo, ...input],
+        stackTwo: [...stack.stackTwo, ...convertStack(input)],
       })
     }
 
@@ -235,14 +224,26 @@ function App() {
     setCurrentStep((currentStep) => currentStep + 1)
   }
 
-  {
-    /*************************************************************
-     * TO DO : Change window with each step                      *
-     *
-     * When currentStep = 0 --> oracle(input)
-     * When currentStep = 2 --> getStack(input) // input should be previous or in the stack
-     * When currentStep = 3 --> getFinal(input) // input should not be previous or final
-     **************************************************************/
+  const finalPredict = () => {
+    setStack({
+      ...stack,
+      stackFinal: [
+        ...stack.stackFinal,
+        stack.stackTwo[2],
+        stack.stackTwo[1],
+        stack.stackTwo[0],
+        stack.stackTwo[3],
+        stack.stackOne[3],
+        stack.stackOne[2],
+        stack.stackOne[1],
+        stack.stackOne[0],
+        stack.stackOne[4],
+        stack.stackThree[2],
+        stack.stackThree[0],
+        stack.stackThree[1],
+      ],
+    })
+    setCurrentStep((currentStep) => currentStep + 1)
   }
 
   return (
@@ -267,6 +268,7 @@ function App() {
           input={input}
           limit={limit}
           predict={predict}
+          finalPredict={finalPredict}
           currentStep={currentStep}
           handleInputColor={
             currentStep === 0
@@ -293,6 +295,7 @@ function App() {
           input={input}
           limit={limit}
           predict={predict}
+          finalPredict={finalPredict}
           currentStep={currentStep}
           handleInputColor={handleInputColor}
           handleInputNumber={handleInputNumber}

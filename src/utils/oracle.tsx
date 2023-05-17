@@ -122,3 +122,9 @@ export const oracle = (inputList: string[]) => {
   }
   return showPrompt(inputList)
 }
+
+export const convertStack = (stack: string[]) => {
+  const colors = ["S", "H", "C", "D"]
+
+  return stack.map((x) => (colors.includes(x[0]) ? x.substring(1) + x[0] : x))
+}
