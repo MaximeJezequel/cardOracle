@@ -1,8 +1,8 @@
 import { memo } from "react"
-import Clubs from "./Clubs"
-import Diamonds from "./Diamonds"
-import Hearts from "./Hearts"
-import Spades from "./Spades"
+import Clubs from "../pips/Clubs"
+import Diamonds from "../pips/Diamonds"
+import Hearts from "../pips/Hearts"
+import Spades from "../pips/Spades"
 
 const KeyboardTop = memo(
   ({

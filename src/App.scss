@@ -1,9 +1,6 @@
 $border-radius-display: 15px;
 $border-radius-button: 25px;
 $border-radius-long: 25px;
-// $border-radius-display: 15px;
-// $border-radius-button: 50%;
-// $border-radius-long: 50px;
 $background-color: #242424;
 $text-color: white;
 $primary-color: orange;
@@ -168,7 +165,7 @@ $secondary-button--light: #d2d2d2;
   background-color: darkgreen;
   text-align: center;
   height: 100%;
-  width: 80vw;
+  width: 90vw;
 
   & img {
     max-height: 80vw;
@@ -190,8 +187,8 @@ $secondary-button--light: #d2d2d2;
 .display-final {
   bottom: -20vh;
   right: 10vw;
-  width: 100vw;
-  height: 100vh;
+  height: 100%;
+  width: 90vw;
   text-align: center;
   position: relative;
 }

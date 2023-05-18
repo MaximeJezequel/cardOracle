@@ -7,14 +7,14 @@ const DisplayOne = memo(
     setCurrentStep,
     stack,
     setStack,
-    favBackDesign,
+    preferences,
   }: {
     prediction: any
     currentStep: number
     setCurrentStep: any
     stack: any
     setStack: any
-    favBackDesign: string
+    preferences: any
   }) => {
     const goToNext = () => {
       if (!isFlipped) setIsFlipped(!isFlipped)
@@ -54,7 +54,7 @@ const DisplayOne = memo(
           <div className="flip-card">
             <div className={`card ${isFlipped ? "isFlipped" : ""}`}>
               <div className="card-back" onClick={() => goToNext()}>
-                <img src={`/cards/${favBackDesign}BackDesign.png`} />
+                <img src={`/cards/${preferences.backDesign}BackDesign.png`} />
               </div>
               <div className="card-front">
                 <img src={`/cards/${prediction}.png`} />

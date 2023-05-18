@@ -3,9 +3,9 @@ import "./App.scss"
 import Display from "./components/Display"
 import DisplayOne from "./components/DisplayOne"
 import DisplayStack from "./components/DisplayStack"
-import KeyboardLeft from "./components/KeyboardLeft"
-import KeyboardTop from "./components/KeyboardTop"
 import Menu from "./components/Menu"
+import KeyboardLeft from "./components/keyboard/KeyboardLeft"
+import KeyboardTop from "./components/keyboard/KeyboardTop"
 import { convertStack, oracle } from "./utils/oracle"
 
 interface IStack {
@@ -32,8 +32,6 @@ function App() {
     orientation: "top",
     backDesign: "red",
   })
-  const [favOrientation, setFavOrientation] = useState<string>("top")
-  const [favBackDesign, setFavBackDesign] = useState<string>("red")
   const [stack, setStack] = useState<IStack>({
     stackZero: ["QS", "10D", "6C", "AH", "9D"],
     stackOne: [],
@@ -206,7 +204,7 @@ function App() {
 
   return (
     <div className="App">
-      <Menu setFavOrientation={setFavOrientation} />
+      <Menu preferences={preferences} setPreferences={setPreferences} />
       {currentStep % 2 === 0 && currentStep < 7 && (
         <Display input={input} erase={erase} currentStep={currentStep} />
       )}
@@ -218,11 +216,11 @@ function App() {
           setCurrentStep={setCurrentStep}
           stack={stack}
           setStack={setStack}
-          favBackDesign={favBackDesign}
+          preferences={preferences}
         />
       )}
       {currentStep === 7 && <DisplayStack stack={stack} setStack={setStack} />}
-      {favOrientation === "top"
+      {preferences.orientation === "top"
         ? currentStep < 7 && (
             <KeyboardTop
               input={input}
